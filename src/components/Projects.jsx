@@ -1,46 +1,65 @@
 const projects = [
   {
     title: "AI Resume Analyzer",
+    Status: "In Progress",
     description: "A web app that scans resumes, extracts keywords, and matches them with job descriptions using NLP.",
     tech: ["React", "Node.js", "OpenAI", "MongoDB"],
-    github: "https://github.com/yourusername/ai-resume-analyzer",
-    demo: "https://resumeai-demo.vercel.app",
+    // github: "Not Available",
+    demo: "#",
   },
   {
-    title: "Smart Home IoT System",
-    description: "Built an embedded system that lets users control devices remotely using NodeMCU + Firebase.",
-    tech: ["C++", "Firebase", "IoT"],
-    github: "https://github.com/yourusername/smart-home-iot",
+    title: "Smart Sound to Speech Interpreter",
+    Status: "Completed (discontinued)",
+    description:
+      "A real-time system that converts important audio notifications (like alarms) into speech. Built with spectrogram analysis, pyttsx3 TTS, and Flask frontend.",
+    tech: ["Python", "Flask", "SQLite", "TTS", "Spectrogram"],
+    github: "https://github.com/bkcho1/Smart-Sound-to-Speech-Interpreter-for-Security-and-Notification-Systems",
+    demo: "#",
+  },
+  {
+    title: "Fake News Detection using Machine Learning",
+    Status: "Completed",
+    description:
+      "Built a deep learning model to detect fake news using NLP and TensorFlow. Achieved 90% accuracy using CNN and RNN architectures.",
+    tech: ["Python", "TensorFlow", "NLP", "CNN", "RNN"],
+    // github: "#",
+    demo: "#",
+  },
+  {
+    title: "E-Learning Lab (LMS)",
+    Status: "Completed",
+    description:
+      "Built an LMS platform for underprivileged children using Django, PostgreSQL, Docker, and GitHub Actions. Included student login, progress tracking, and REST APIs.",
+    tech: ["Django", "PostgreSQL", "HTML/CSS/JS", "Docker", "GitHub"],
+    github: "https://github.com/Nsai-roshan/VirtualLearningLab",
+    demo: "https://elearning-lab.org/",
+  },
+  {
+    title: "Sun Devil Pizza Automation",
+    Status: "Completed",
+    description:
+      "Developed a Java-based pizza ordering system with JavaFX UI. Focused on scalability, fault tolerance, and agile testing with Jira + GitHub.",
+    tech: ["Java", "JavaFX", "HTML", "Agile", "Jira"],
+    github: "https://github.com/Hauteknits/probable-octo-succotash",
+    demo: "#",
+  },
+  {
+    title: "Social Media Web App",
+    Status: "Completed",
+    description: "Built a Flask-based social media platform where users can register, log in, follow others, and interact through posts. Includes real-time dashboard and PostgreSQL-backed user management.",
+    tech: ["Flask", "Python", "PostgreSQL", "HTML/CSS", "JavaScript"],
+    github: "https://github.com/agarimel/DMBS-final-project",
     demo: "#",
   },
   {
     title: "Student Record Manager (C++)",
+    Status: "Completed",
     description: "File-based project that manages student data through CRUD operations using C++.",
     tech: ["C++", "OOP", "File Handling"],
-    github: "https://github.com/yourusername/student-record-manager",
-    demo: "#",
-  },
-  {
-    title: "Student Record Manager (C++)",
-    description: "File-based project that manages student data through CRUD operations using C++.",
-    tech: ["C++", "OOP", "File Handling"],
-    github: "https://github.com/yourusername/student-record-manager",
-    demo: "#",
-  },
-  {
-    title: "Student Record Manager (C++)",
-    description: "File-based project that manages student data through CRUD operations using C++.",
-    tech: ["C++", "OOP", "File Handling"],
-    github: "https://github.com/yourusername/student-record-manager",
-    demo: "#",
-  },
-  {
-    title: "Student Record Manager (C++)",
-    description: "File-based project that manages student data through CRUD operations using C++.",
-    tech: ["C++", "OOP", "File Handling"],
-    github: "https://github.com/yourusername/student-record-manager",
+    // github: "#",
     demo: "#",
   }
+
 ];
 
 export default function Projects() {
@@ -52,7 +71,7 @@ export default function Projects() {
         {projects.map((proj, index) => (
           <div
             key={index}
-            className="bg-white dark:bg-white-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md hover:shadow-lg transition text-grey dark:text-black"
+            className="bg-white dark:bg-white-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-md hover:shadow-lg transition text-grey dark:text-black relative"
           >
             <h3 className="text-2xl font-bold mb-2">{proj.title}</h3>
             <p className="text-gray-700 dark:text-gray-700 mb-3">{proj.description}</p>
@@ -68,7 +87,7 @@ export default function Projects() {
               ))}
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <a
                 href={proj.github}
                 target="_blank"
@@ -88,6 +107,18 @@ export default function Projects() {
                 </a>
               )}
             </div>
+
+            <span
+              className={`absolute bottom-4 right-4 text-sm font-medium px-3 py-1 rounded-full ${
+                proj.Status.includes("Completed")
+                  ? "bg-green-100 text-green-700"
+                  : proj.Status.includes("discontinued")
+                  ? "bg-red-100 text-red-700"
+                  : "bg-blue-100 text-blue-700"
+              }`}
+            >
+              {proj.Status}
+            </span>
           </div>
         ))}
       </div>

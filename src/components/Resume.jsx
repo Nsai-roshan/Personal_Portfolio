@@ -2,7 +2,7 @@ export default function Resume() {
   const pdfPath = `${process.env.PUBLIC_URL}/SaiRoshanRao_Nelavalli.pdf`;
 
   return (
-    <section id="resume" className="min-h-screen px-6 py-20 flex flex-col items-center" data-aos="zoom-out">
+    <section id="resume" className="min-h-screen px-6 py-20 flex flex-col items-center" data-aos="zoom-in">
       <h2 className="text-4xl font-bold mb-6 text-gray-800 dark:text-white">My Resume</h2>
 
       {/* Embedded resume viewer */}

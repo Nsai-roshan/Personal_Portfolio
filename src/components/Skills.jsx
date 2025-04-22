@@ -7,7 +7,7 @@ const skills = [
   
   export default function Skills() {
     return (
-      <section id="skills" className="min-h-screen px-6 py-20"  data-aos="zoom-out">
+      <section id="skills" className="min-h-screen px-6 py-20"  data-aos="zoom-in">
       <div className="text-black">
       <h2 className="text-4xl font-bold text-center mb-10 text-black dark:text-white">Skills</h2>
       </div>
