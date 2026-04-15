@@ -1,61 +1,161 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+const NAV_LINKS = [
+  { label: "About",      href: "#about"      },
+  { label: "Skills",     href: "#skills"     },
+  { label: "Projects",   href: "#projects"   },
+  { label: "Experience", href: "#experience" },
+  { label: "Education",  href: "#education"  },
+  { label: "Contact",    href: "#contact"    },
+];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open,     setOpen]     = useState(false);
+  const [active,   setActive]   = useState("");
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = document.querySelectorAll("section[id]");
+    const obs = new IntersectionObserver(
+      (entries) => { entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); }); },
+      { threshold: 0.3 }
+    );
+    sections.forEach((s) => obs.observe(s));
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-40 bg-white/30 dark:bg-white/10 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-full px-9 py-3 shadow-md w-fit max-w-[95%]" >
-      <div className="flex items-center w-full gap-10">
-        {/* Name / Logo */}
-        <h1 className="text-lg font-bold text-black dark:text-white mr-10 min-w-[120px] whitespace-nowrap">Sai Roshan Rao</h1>
-
-        {/* Desktop Nav */}
-        <ul className="hidden sm:flex gap-8 text-sm font-medium text-black dark:text-white ml-auto">
-          <li><a href="#hero" className="hover:underline hover:rounded-full hover:px-4 hover:py-2 hover:bg-blue-300 dark:hover:bg-blue-800">Home</a></li>
-          <li><a href="#about" className="hover:underline hover:rounded-full hover:px-4 hover:py-2 hover:bg-blue-300 dark:hover:bg-blue-800">About</a></li>
-          <li><a href="#skills" className="hover:underline hover:rounded-full hover:px-4 hover:py-2 hover:bg-blue-300 dark:hover:bg-blue-800">Skills</a></li>
-          <li><a href="#projects" className="hover:underline hover:rounded-full hover:px-4 hover:py-2 hover:bg-blue-300 dark:hover:bg-blue-800">Projects</a></li>
-          <li><a href="#resume" className="hover:underline hover:rounded-full hover:px-4 hover:py-2 hover:bg-blue-300 dark:hover:bg-blue-800">Resume</a></li>
-          <li><a href="#contact" className="hover:underline hover:rounded-full hover:px-4 hover:py-2 hover:bg-blue-300 dark:hover:bg-blue-800">Contact</a></li>
-        </ul>
-
-        {/* Mobile Hamburger */}
-        <button
-          onClick={toggleMenu}
-          className="sm:hidden ml-auto"
-          aria-label="Toggle Menu"
+    <>
+      {/* Floating pill navbar */}
+      <nav
+        className="fixed top-4 left-1/2 z-50 transition-all duration-300"
+        style={{ transform: "translateX(-50%)" }}
+      >
+        <div
+          className="flex items-center gap-1 px-2 py-2"
+          style={{
+            borderRadius: 9999,
+            background: scrolled
+              ? "rgba(8,8,8,0.92)"
+              : "rgba(10,10,10,0.75)",
+            border: "1px solid rgba(99,102,241,0.18)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            boxShadow: scrolled
+              ? "0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,0.04)"
+              : "0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03)",
+          }}
         >
-          <svg
-            className="w-6 h-6 text-black dark:text-white"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
+          {/* Logo */}
+          <a
+            href="#hero"
+            className="text-xs font-black tracking-widest px-3 py-1.5 rounded-full mr-1"
+            style={{
+              color: "#6366f1",
+              background: "rgba(99,102,241,0.08)",
+              border: "1px solid rgba(99,102,241,0.15)",
+              letterSpacing: "0.15em",
+            }}
           >
-            {isOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </div>
+            SR
+          </a>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <ul className="sm:hidden mt-4 flex flex-col gap-3 text-sm font-medium text-black dark:text-white">
-          <li><a href="#hero" className="hover:underline" onClick={toggleMenu}>Home</a></li>
-          <li><a href="#about" className="hover:underline" onClick={toggleMenu}>About</a></li>
-          <li><a href="#skills" className="hover:underline" onClick={toggleMenu}>Skills</a></li>
-          <li><a href="#projects" className="hover:underline" onClick={toggleMenu}>Projects</a></li>
-          <li><a href="#resume" className="hover:underline" onClick={toggleMenu}>Resume</a></li>
-          <li><a href="#contact" className="hover:underline" onClick={toggleMenu}>Contact</a></li>
-        </ul>
-      )}
-    </nav>
+          {/* Desktop links */}
+          <ul className="hidden md:flex items-center gap-0.5">
+            {NAV_LINKS.map(({ label, href }) => {
+              const id = href.slice(1);
+              const isActive = active === id;
+              return (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className="block px-3 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200"
+                    style={
+                      isActive
+                        ? {
+                            color: "#fff",
+                            background: "rgba(99,102,241,0.18)",
+                            boxShadow: "0 0 12px rgba(99,102,241,0.25)",
+                          }
+                        : { color: "#71717a" }
+                    }
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = "#e4e4e7";
+                        e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = "#71717a";
+                        e.currentTarget.style.background = "transparent";
+                      }
+                    }}
+                  >
+                    {label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden px-2 py-1.5 rounded-full transition-colors"
+            style={{ color: "#71717a" }}
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "#e4e4e7"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#71717a"; }}
+          >
+            {open ? (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {/* Mobile dropdown */}
+        {open && (
+          <div
+            className="md:hidden mt-2 px-3 py-3 flex flex-col gap-1"
+            style={{
+              borderRadius: 20,
+              background: "rgba(8,8,8,0.95)",
+              border: "1px solid rgba(99,102,241,0.18)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+              minWidth: 180,
+            }}
+          >
+            {NAV_LINKS.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                onClick={() => setOpen(false)}
+                className="px-3 py-2 rounded-full text-sm transition-all duration-150"
+                style={{ color: "#a1a1aa" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(99,102,241,0.12)"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#a1a1aa"; }}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        )}
+      </nav>
+    </>
   );
 }
