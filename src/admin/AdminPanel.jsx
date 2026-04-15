@@ -131,12 +131,12 @@ function ProjectsTab({ data, updateSection }) {
 }
 
 function ProjectForm({ initial, onSave, onClose }) {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState(() => ({
     title: "", description: "", url: "", start_date: "", end_date: "",
-    tech_stack: "", outcomes: "", ...initial,
+    ...initial,
     tech_stack: Array.isArray(initial.tech_stack) ? initial.tech_stack.join(", ") : (initial.tech_stack || ""),
     outcomes: Array.isArray(initial.outcomes) ? initial.outcomes.join("\n") : (initial.outcomes || ""),
-  });
+  }));
   const f = (k) => (e) => setForm(p => ({ ...p, [k]: e.target.value }));
   const submit = () => onSave({
     ...form,
