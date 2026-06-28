@@ -177,6 +177,16 @@
   ],
   "projects": [
     {
+      "title": "Mawa nro",
+      "description": "",
+      "url": "",
+      "start_date": "",
+      "end_date": "",
+      "tech_stack": [],
+      "outcomes": [],
+      "id": "P1782611045987"
+    },
+    {
       "id": "P25",
       "title": "PCB-X-AI (TraceMind) - Full-Stack PCB Automation Engine",
       "description": "Full-stack PCB automation engine that takes circuit netlists as JSON, auto-places components, routes traces, and computes real IR-drop and thermal fields with AI-powered fix suggestions and live browser-based parameter tuning.",
