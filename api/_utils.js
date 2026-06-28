@@ -31,7 +31,7 @@ function githubApi(path, method, body) {
       path,
       method,
       headers: {
-        Authorization: "token " + process.env.GITHUB_TOKEN,
+        ...(process.env.GITHUB_TOKEN ? { Authorization: "token " + process.env.GITHUB_TOKEN } : {}),
         "User-Agent": "portfolio-admin",
         "Content-Type": "application/json",
         Accept: "application/vnd.github.v3+json",
