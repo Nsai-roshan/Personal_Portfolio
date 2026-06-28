@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     try {
       const { status, body } = await githubApi(path, "GET", null);
       if (status !== 200) return res.status(500).json({ error: "Failed to fetch from GitHub" });
-      const content = Buffer.from(body.content, "base64").toString("utf8");
+      const content = Buffer.from(body.content, "base64").toString("utf8").replace(/﻿/g, "");
       return res.json({ data: JSON.parse(content), sha: body.sha });
     } catch (e) {
       return res.status(500).json({ error: e.message });
