@@ -1240,6 +1240,22 @@
   ],
   "certifications": [
     {
+      "name": "IBM RAG and Agentic AI ",
+      "issuer": "IBM Skills Network Via Courseera",
+      "date": "2026-05",
+      "url": "https://coursera.org/verify/professional-cert/04DRX42ZZST3",
+      "image": "/images/certs/cert_1782611720583.jpg",
+      "id": "cert_1782611722010"
+    },
+    {
+      "name": "Cloud Computing for Data Science",
+      "issuer": "University of Pittsburgh, School of Information Sciences Via Courseera",
+      "date": "2026-05",
+      "url": "https://coursera.org/verify/specialization/I0HYEFBVUYAW",
+      "image": "/images/certs/cert_1782611586237.jpg",
+      "id": "cert_1782611604522"
+    },
+    {
       "name": "Neo4j Certified Professional",
       "issuer": "Neo4j",
       "date": "2025-05",
